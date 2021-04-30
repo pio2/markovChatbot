@@ -11,7 +11,6 @@ import random
 import dataDownload
 import question
 import word2vec
-import win32com.client as wincl
 
 #単語に反応してそれから始まる文を生成しているだけのボット
 class markovBot:
@@ -19,11 +18,7 @@ class markovBot:
     log = {} #user : bot
     tagger = MeCab.Tagger("")
     tagger.parse("")
-    voice = wincl.Dispatch("SAPI.SpVoice")
     model = {}
-    
-    def speech(self, text):
-        self.voice.Speak(text)
     
     def load_text_data(self, directory_path):
         return dataDownload.open_zipfile("./text_data/conversation_data.zip")
