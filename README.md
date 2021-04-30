@@ -1,1 +1,2 @@
 # markovChatbot
+実行時はディレクトリ内にtext_dataというフォルダを作ってください。
