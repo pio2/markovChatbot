@@ -21,7 +21,7 @@ def get_similar_word(word) -> str:
     return nlp("ラーメン屋はおいしい").similarity(nlp("ラーメンはおいしくない"))
 
 print(get_similar_word("日本"))
-doc = nlp('今年の夏休みは北海道に行きました。とても寒かったです。僕の名前は豊島圭吾です。')
+doc = nlp('今年の夏休みは北海道に行きました。とても寒かったです。僕の名前はです。')
 for ent in doc.ents:
     print(ent.text, ent.start_char, ent.end_char, ent.label_)
     #print(ent)
