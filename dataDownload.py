@@ -4,19 +4,62 @@ Created on Sun Apr 25 10:57:34 2021
 
 @author: keigo
 """
-import urllib.request as request
+import urllib.request
 import zipfile
 import os
 
-def data_download(url):
+
+def data_download(url, dst_path="./text_data/conversation_data.zip"):
+    """
+    if learning data is none, get data.
+    Parameters
+    ----------
+    url : str
+        DESCRIPTION. learning data url
+    dst_path : str
+        DESCRIPTION. save dir.The default is "./text_data/conversation_data.zip".
+
+    Returns
+    -------
+    None.
+
+    """
     try:
-        if os.path.exists("./text_data/conversation_data.zip"):
-            return
-        request.urlretrieve(url, "./text_data/conversation_data.zip")
-    except:
-        print("Data Download Failed")
-        
+        # get dir (dst_dir = "./text_data")
+        dst_dir = os.path.dirname(dst_path)
+
+        # case1: no dir no file,case2:exist dir no file
+        # if dir is none,make dir
+        if not os.path.isdir(dst_dir):
+            os.mkdir(dst_dir)
+        # if file not found,download and save file
+        if not os.path.exists(dst_path):
+            print("学習データがないのでダウンロード中")
+            with urllib.request.urlopen(url) as web_file, open(dst_path, 'wb') as local_file:
+                local_file.write(web_file.read())
+            print("学習データダウンロード完了")
+
+    except Exception as e:
+        print('***** 学習データダウンロードエラー *****')
+        print(e)
+        print('**********************************')
+
+
 def open_zipfile(path):
+    """
+    union learning data
+
+    Parameters
+    ----------
+    path : str
+        DESCRIPTION.learning data path
+
+    Returns
+    -------
+    texts : str
+        DESCRIPTION.unioned learning data
+
+    """
     data_download("https://mmsrv.ninjal.ac.jp/nucc/nucc.zip")
     try:
         texts = ""
@@ -36,7 +79,6 @@ def open_zipfile(path):
         return texts
     except FileNotFoundError:
         print("File Not Found")
-        
 
     
 
